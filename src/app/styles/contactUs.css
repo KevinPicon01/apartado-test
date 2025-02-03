@@ -1,0 +1,162 @@
+@media (max-width: 770px) {
+    .contact-container {
+        padding-bottom: 2em;
+        padding-top: 2em;
+    }
+    .contact-container p {
+        padding: 15px;
+    }
+    .contact-main-div {
+        margin-top: 25px;
+    }
+    .contact-title {
+        font-size: 2em;
+    }
+    .contact-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 30px;
+    }
+    .contact-image-container img {
+        width: 80%;
+        height: auto;
+    }
+    .honk-title {
+        padding: 10px !important;
+    }
+}
+
+.honk-title {
+    text-align: center;
+    font-family: "Elephant", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    padding: 40px;
+    font-style: normal;
+    font-variation-settings:
+            "MORF" 15,
+            "SHLN" 50;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, auto));
+}
+
+.contact-title {
+    color: #171717;
+}
+
+.contact-text {
+    color: #171717;
+    font-size: 1.2em;
+    text-align: justify;
+}
+
+.contact-main-div {
+    border-bottom: 2px solid var(--secondBackground);
+    background: var(--background);
+}
+
+.contact-image {
+    border-radius: 2%;
+    border-left: 1px solid #171717;
+}
+
+@media (min-width: 770px) {
+    .contact-main-div {
+        height: auto;
+        padding-bottom: 8%;
+        padding-top: 8%;
+    }
+    .contact-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 30px;
+    }
+    .contact-title {
+        font-size: 3em;
+    }
+    .contact-text {
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+    .contact-main-div {
+        height: auto;
+    }
+    .contact-main-div p {
+        margin: 0;
+        padding: 8%;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Inicialmente, sin animación */
+.animated-item {
+    opacity: 0;
+    transform: translateX(0); /* Evita que se desplace antes de ser visible */
+}
+
+/* Cuando se hace visible (cuando se añade la clase 'visible') */
+.animated-item.visible {
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+}
+
+/* Animación para el contenedor de imagen */
+.contact-image-container.visible {
+    animation-name: slideInFromLeft;
+}
+
+/* Animación para el contenedor de texto */
+.contact-text-container.visible {
+    animation-name: slideInFromRight;
+}
+
+.contact-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: center; /* Centra el contenido verticalmente */
+}
+.whatsapp-button {
+    background-color: #25D366; /* Color verde de WhatsApp */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    background-color: #1DA851; /* Color más oscuro al hacer hover */
+}

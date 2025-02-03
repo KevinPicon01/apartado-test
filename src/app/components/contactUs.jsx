@@ -1,0 +1,26 @@
+import '../styles/homeContent.css'
+import '../styles/contactUs.css'
+import {useAnimatedItems} from "@/app/components/animatedItems";
+
+const ContactUs = ({ webData }) => {
+    return (
+        <div id='ContactUs' className="contact-main-div">
+            <div className="contact-container">
+                <div className="contact-text-container animated-item">
+                    <h1 className="contact-title honk-title ">Contáctanos</h1>
+                    <br></br>
+                    <p className='about-text'>{webData.contact_us[0].texto}</p>
+
+                    <a href={webData.link3} target="_blank" rel="noopener noreferrer">
+                        <button className="whatsapp-button">Contáctanos</button>
+                    </a>
+
+                </div>
+                <div className='contact-image-container animated-item'>
+                    <img className='contact-image' src={webData.contact_us[0].imagen} alt='contact'/>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default ContactUs;

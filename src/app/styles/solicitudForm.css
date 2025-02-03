@@ -1,0 +1,76 @@
+/* Contenedor del formulario */
+.form-container {
+    background-color: var(--secondBackground); /* Verde más oscuro */
+    border: 2px solid var(--shadowColor); /* Borde verde aún más oscuro */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto; /* Centramos el formulario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales de los campos */
+.form-container div {
+    margin-bottom: 15px; /* Espaciado entre los campos */
+}
+
+/* Etiquetas */
+.form-container label {
+    display: block; /* Aseguramos que cada etiqueta esté en su línea */
+    margin-bottom: 5px;
+    color: #000000; /* Color gris oscuro */
+    font-weight: bold;
+}
+.form-container label span {
+    color: #ff0000; /* Rojo */
+}
+.politicaDatos {
+    color: #213aaa;
+    font-weight: bold;
+    font-size: 0.6rem;
+    text-align: right;
+}
+.politicaDatos-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0 !important;
+}
+.politicaDatos-container label {
+    margin-bottom: 0;
+}
+/* Campos de entrada */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--shadowColor);
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.66);
+    box-sizing: border-box;
+}
+
+/* Textarea */
+.form-container textarea {
+    height: 100px; /* Espacio suficiente para escribir */
+    resize: vertical; /* Permite cambiar el tamaño verticalmente */
+}
+
+/* Botón de envío */
+.form-container button {
+    background-color: var(--shadowColor); /* Verde oscuro */
+    color: #ffffff; /* Texto en blanco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+}
+
+.form-container button:hover {
+    background-color: var(--hoverColor); /* Un poco más oscuro al pasar el ratón */
+}

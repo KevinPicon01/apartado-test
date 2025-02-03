@@ -1,0 +1,131 @@
+@media (max-width: 770px){
+    .main-container{
+        display: grid;
+        justify-items: center;
+        padding-bottom: 8%;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 770px)) !important;
+    }
+    .main-image-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .home-main-div{
+        padding-top: 80px;
+        justify-items: center;
+        width: 100vw ;
+    }
+    .navHome{
+        display: flex;
+        gap: 20px;
+        padding-top: 10px;
+    }
+    .main-title {
+        font-size: 2em;
+        max-width: 90%;
+    }
+}
+.home-main-image {
+    width: 75%;
+    height: auto;
+    border-radius: 2%;
+    transition: transform 0.5s ease;
+}
+.navHome a:hover{
+    color: #171717;
+}
+.homeBorder{
+    padding-left: 15px;
+    border-left: 1px solid rgba(152, 152, 152, 0.73);
+}
+.main-title{
+    font-family: 'Elephant', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+    color: #171717;
+}
+@media (min-width: 770px) {
+    .home-main-div{
+        padding-top: 2%;
+    }
+    .main-text{
+        display: flex; /* Agrega flexbox para centrar elementos */
+        justify-content: center; /* Centra horizontalmente los elementos */
+        align-items: center; /* Centra verticalmente los elementos */
+        padding: 100px;
+    }
+
+    .navHome{
+        display: flex;
+        gap: 20px;
+        padding-right: 100px;
+        padding-left: 100px;
+    }
+    .navHome a{
+        margin: 0;
+        font-size: 1.3em;
+        color: #989898BA;
+    }
+    .home-main-image {
+        width: 100vh;
+        height: auto;
+    }
+    .main-image-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-title{
+        padding: 15px;
+        font-size: 3em;
+    }
+}
+
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animated-item {
+    opacity: 0;
+    transform: translateX(0);
+}
+
+.animated-item {
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+}
+
+.main-title {
+    animation-name: slideInFromLeft;
+}
+
+.home-main-image {
+    animation-name: slideInFromRight;
+}
+
+
+
+

@@ -1,0 +1,67 @@
+.quote-title {
+  font-size: 2em;
+  color: #171717;
+  padding-bottom: 10px;
+}
+.quote-text-container {
+  padding: 50px;
+  padding-right: 0;
+  align-content: center;
+}
+.quote-container {
+  padding: 50px;
+  padding-left: 75px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, auto));
+}
+@media (max-width: 770px) {
+  .about-title {
+    font-size: 2em;
+  }
+  .quote-container {
+    grid-template-columns: repeat(auto-fit, minmax(320px, auto));
+    width: 100%;
+    max-width: 100%;
+    align-content: center;
+    padding: 0;
+  }
+  .quote-text-container{
+    padding: 15px;
+  }
+  .quote-image-container{
+    width: 100%;
+  }
+}
+
+@media (min-width: 770px) {
+  .quote-image-container {
+    padding-left: 30px;
+  }
+
+}
+
+@keyframes slideInFromDown {
+  0% {
+    transform: translateY(70%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animated-item {
+  opacity: 0;
+  transform: translateY(0); /* Evita que se desplace antes de ser visible */
+}
+.animated-item.visible {
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+.quote-image-container.visible {
+  animation-name: slideInFromDown;
+}
+.quote-text-container.visible {
+  animation-name: slideInFromDown;
+}

@@ -1,0 +1,35 @@
+.politica-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.politica-titulo {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.politica-seccion {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-left: 4px solid var(--shadowColor);
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
+.politica-subtitulo {
+    font-size: 1.5rem;
+    color: var(--shadowColor);
+    margin-bottom: 10px;
+}
+
+.politica-seccion p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}

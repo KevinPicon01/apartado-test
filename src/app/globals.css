@@ -4,18 +4,26 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --secondBackground: #75f6f1;
+  --shadowColor: #12bdb6;
+  --hoverColor: #04918c;
+  --font: Elephant;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: 'Elephant';
+  src: url('fonts/ELEPHNT.TTF') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-  color: var(--foreground);
+  color: var(--hoverColor);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

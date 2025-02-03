@@ -1,0 +1,133 @@
+@media (max-width: 770px) {
+    .about-container{
+        padding-bottom: 2em;
+        padding-top: 2em;
+    }
+    .about-container p{
+        padding: 15px;
+    }
+    .about-main-div{
+        margin-top: 25px;
+    }
+    .about-title{
+        font-size: 2em;
+    }
+
+    .about-image-container img{
+        width: 80%;
+        height: auto;
+    }
+    .honk-title{
+        padding: 10px !important;
+    }
+
+}
+.about-image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.honk-title {
+    text-align: center;
+    font-family: "Elephant", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    padding-top: 0 !important;
+    font-style: normal;
+    font-variation-settings:
+            "MORF" 15,
+            "SHLN" 50;
+}
+.about-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, auto));
+}
+.about-title{
+   color: #171717;
+}
+.about-text{
+    color: #171717;
+    font-size: 1.2em;
+    text-align: justify;
+}
+
+.about-main-div{
+    background: var(--secondBackground);
+}
+.about-image{
+    border-radius: 2%;
+    border-left: 1px solid #171717;
+}
+
+
+@media (min-width: 770px) {
+    .about-main-div{
+        height: auto;
+        padding-bottom: 8%;
+        padding-top: 8%;
+    }
+    .about-title{
+        font-size: 3em;
+    }
+    .about-text{
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+
+    .about-main-div {
+        height: auto;
+    }
+
+    .about-main-div p{
+        margin: 0;
+        padding: 8%;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(70%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Inicialmente, sin animación */
+.animated-item {
+    opacity: 0;
+    transform: translateX(0); /* Evita que se desplace antes de ser visible */
+}
+
+/* Cuando se hace visible (cuando se añade la clase 'visible') */
+.animated-item.visible {
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+}
+
+/* Animación para el contenedor de imagen */
+.about-image-container.visible {
+    animation-name: slideInFromLeft;
+}
+
+/* Animación para el contenedor de texto */
+.about-text-container.visible {
+    animation-name: slideInFromRight;
+}

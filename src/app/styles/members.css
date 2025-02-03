@@ -1,0 +1,73 @@
+/* Estilos generales */
+.members-main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px;
+    padding-top: 3%;
+}
+
+.members-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    padding-top: 0;
+    border-radius: 8px;
+}
+
+/* Estilos para el título */
+.members-title {
+    font-size: 3em;
+    color: #000000;
+    padding-top: 0;
+}
+.members-text {
+    font-size: 1.2em;
+    color: #000000;
+    padding-top: 0;
+    padding-bottom: 20px;
+}
+/* Estilos para la imagen */
+.members-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.members-main-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+@media (max-width: 770px)  {
+    .members-main-div {
+        padding: 10px !important;
+    }
+
+    .members-container {
+        padding: 10px !important;
+    }
+
+    .members-title {
+        font-size: 2em !important;
+    }
+}
+
+
+
+
+
+/* Animación para el contenedor de imagen */
+.members-title.visible {
+    animation-name: slideInFromLeft;
+}
+
+/* Animación para el contenedor de texto */
+.members-main-image.visible {
+    animation-name: slideInFromRight;
+}

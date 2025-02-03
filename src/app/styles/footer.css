@@ -1,0 +1,109 @@
+
+@media (max-width: 770px) {
+    .navigation-footer{
+        display: none !important;
+    }
+    .logo-footer{
+        display: none;
+    }
+    .slogan-footer{
+        display: none;
+    }
+
+}
+.footer {
+    background-color: var(--secondBackground);
+    width: 100vw;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Crear columnas automáticas responsivas */
+    padding: 1rem; /* Ajusta según sea necesario */
+    box-sizing: border-box; /* Para incluir el padding en el ancho total */
+}
+.social-media h3{
+    margin: 0;
+    padding-top: 5px;
+    text-align: center;
+    color: #171717;
+}
+.social-media-icon{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 55px);
+}
+.social-media-icon a{
+    margin: 0;
+}
+
+.media-logo-footer{
+    width: 50px;
+    height: auto;
+    margin: 0;
+    background: var(--shadowColor);
+    border-radius: 10%;
+}
+.facebook-logo:hover{
+    background: #3b5998;
+    transform: scale(1.1);
+}
+.whatsapp-logo:hover{
+    background: #25d366;
+    transform: scale(1.1);
+}
+.instagram-logo:hover {
+    background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+    transform: scale(1.1);
+}
+
+.logo-footer img{
+    height: 130px;
+}
+.logo-footer {
+    transition: transform 0.3s ease, filter 300ms
+
+}
+.logo-footer:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 2em var(--hoverColor));
+}
+
+.slogan-footer {
+    bottom: 3.4em;
+    left: 17em;
+    position: static;
+}
+.slogan-footer h3 {
+    font-size: 1em;
+    font-style: italic;
+    font-family: 'Roboto', sans-serif;
+    margin: 6px;
+    line-height: 1.1;
+    color: #171717;
+}
+
+.navigation-footer {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+
+}
+.navigation-footer a{
+    margin: 5px;
+    color: #171717;
+}
+.navigation-footer a:hover{
+    border-bottom: 2px solid #171717;
+}
+.navigation-footer button:hover {
+    border: none;
+    color: #129045;
+}
+.navigation-footer::before {
+    content: "";
+    position: static;
+    top: 6px;
+    bottom: 6px;
+    left: 0;
+    width: 1px;
+    background-color: #ffffff;
+}
