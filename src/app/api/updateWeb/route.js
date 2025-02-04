@@ -1,9 +1,6 @@
 // src/app/api/verifyPassword.js
 import prisma from "@/lib/prisma";
-import id from "../../texts"
 import {console} from "next/dist/compiled/@edge-runtime/primitives";
-import {white} from "next/dist/lib/picocolors";
-
 
 export async function POST(req) {
     try {
