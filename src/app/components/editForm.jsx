@@ -103,21 +103,15 @@ const EditForm = () => {
 
             console.log("📩 Respuesta del servidor:", res);
 
-            const text = await res.text();
+            const text = await res.json();
             console.log("🔄 Respuesta en texto:", text);
 
-            let result = {}; // Inicializamos con un objeto vacío por si el JSON es inválido
-            try {
-                result = text ? JSON.parse(text) : {};
-            } catch (jsonError) {
-                console.error("❌ Error parseando JSON:", jsonError);
-            }
 
-            if (res.ok) {
-                alert("Cambios guardados con éxito");
-            } else {
+
+            if (!res.ok) {
                 alert("Error al guardar: " + (result.message || "Respuesta inesperada"));
             }
+            alert("Datos guardados correctamente");
         } catch (error) {
             console.error("❌ Error guardando datos:", error);
             alert("Error al guardar: " + error.message);
