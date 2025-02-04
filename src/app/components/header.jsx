@@ -44,16 +44,6 @@ const TheHeader = ({ webData }) => {
                         </li>
                         <li>
                             <a
-                                href="/#Quote"
-                                onClick={() => {
-                                    document.getElementById('navbar').style.display = 'none';
-                                }}
-                            >
-                                Cotiza
-                            </a>
-                        </li>
-                        <li>
-                            <a
                                 href="/#About"
                                 onClick={() => {
                                     document.getElementById('navbar').style.display = 'none';
@@ -83,7 +73,7 @@ const TheHeader = ({ webData }) => {
                 </div>
                 <nav className="navigation">
                     <a href="/#Catalogue">Catalogo</a>
-                    <a href="/#Quote" className="borderLin" >Cotizar</a>
+                    <a href="/#ContactUs" className="borderLin" >Cotizar</a>
                 </nav>
             </header>
         </>

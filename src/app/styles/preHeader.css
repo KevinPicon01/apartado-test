@@ -1,6 +1,6 @@
 @media (max-width: 770px) {
-    .preHeader-main-container {
-       display: none;
+    .preHeader-main-container{
+       display: none !important;
     }
 
 }
