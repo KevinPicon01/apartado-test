@@ -1,7 +1,7 @@
 // src/app/api/verifyPassword.js
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import id from "../texts";
+import id from "../../texts";
 
 export async function POST(req) {
     const { password } = await req.json();
