@@ -9,7 +9,7 @@ const ContactUs = ({ webData }) => {
                 <div className="contact-text-container animated-item">
                     <h1 className="contact-title honk-title ">Contáctanos</h1>
                     <br></br>
-                    <p className='about-text'>{webData.contact_us[0].texto}</p>
+                    <p className='about-text'>{webData.contact_us.texto}</p>
 
                     <a href={webData.link3} target="_blank" rel="noopener noreferrer">
                         <button className="whatsapp-button">Contáctanos</button>
@@ -17,7 +17,7 @@ const ContactUs = ({ webData }) => {
 
                 </div>
                 <div className='contact-image-container animated-item'>
-                    <img className='contact-image' src={webData.contact_us[0].imagen} alt='contact'/>
+                    <img className='contact-image' src={webData.contact_us.imagen} alt='contact'/>
                 </div>
             </div>
         </div>

@@ -9,11 +9,11 @@ const About = ({ webData }) => {
         <div id='About' className="about-main-div">
                 <div className="about-container">
                     <div className='about-image-container animated-item'>
-                        <img className='about-image' src={webData.about_us[0].imagen} alt='about'/>
+                        <img className='about-image' src={webData.about_us.imagen} alt='about'/>
                     </div>
                     <div className="about-text-container animated-item">
-                        <h1 className="about-title honk-title ">{webData.about_us[0].titulo}</h1>
-                        <p className='about-text'> {webData.about_us[0].texto}</p>
+                        <h1 className="about-title honk-title ">{webData.about_us.titulo}</h1>
+                        <p className='about-text'> {webData.about_us.texto}</p>
 
                     </div>
                 </div>

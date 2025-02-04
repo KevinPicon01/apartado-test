@@ -8,6 +8,7 @@ import ContactUs from "./components/contactUs"; // Importa tu componente Contact
 import TheFooter from "./components/footer";
 import Catalogue from "@/app/components/catalogue";
 import Members from "@/app/components/members"; // Importa tu componente TheFooter
+import id from "./texts";
 
 const WebsPage = () => {
   const [websData, setWebsData] = useState([]);
@@ -17,7 +18,7 @@ const WebsPage = () => {
     // Llamada a la API para obtener los datos
     const fetchWebsData = async () => {
       try {
-        const pageId = 1;
+        const pageId = id;
         const res = await fetch(`/api/webs?id=${pageId}`);
         if (!res.ok) {
             new Error("Failed to fetch data");
@@ -40,7 +41,17 @@ const WebsPage = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  const webData = websData;
+    const structuredData = {
+        ...websData,
+        home: websData.home?.[0] || {},  // Tomar el primer elemento del array
+        about_us: websData.about_us?.[0] || {},
+        footer: websData.footer?.[0] || {},
+        header: websData.header?.[0] || {},
+        catalogo: websData.catalogo?.[0] || {},
+        members: websData.members?.[0] || {},
+        contact_us: websData.contact_us?.[0] || {},
+    };
+  const webData = structuredData;
 
   return (
       <div>

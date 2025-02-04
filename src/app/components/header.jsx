@@ -69,7 +69,7 @@ const TheHeader = ({ webData }) => {
                     <a href="/#About" className="borderLin">Nosotros</a>
                 </nav>
                 <div className="logo">
-                    <img src={webData.header[0]?.logo} alt="Logo"/>
+                    <img src={webData.header?.logo} alt="Logo"/>
                 </div>
                 <nav className="navigation">
                     <a href="/#Catalogue">Catalogo</a>

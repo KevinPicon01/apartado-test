@@ -7,11 +7,11 @@ const Members = ({ webData }) => {
     return (
         <div id='members' className="members-main-div">
             <div className="members-container">
-                <h1 className="members-title honk-title animated-item">{webData.members[0].titulo}</h1>
-                <p className="members-text">{webData.members[0].texto}</p>
+                <h1 className="members-title honk-title animated-item">{webData.members.titulo}</h1>
+                <p className="members-text">{webData.members.texto}</p>
                 <a target="_blank" rel="noopener noreferrer"
                    className="members-image-container">
-                    <img className="members-main-image animated-item" src={webData.members[0].imagen} alt="membersImage"/>
+                    <img className="members-main-image animated-item" src={webData.members.imagen} alt="membersImage"/>
                 </a>
             </div>
         </div>

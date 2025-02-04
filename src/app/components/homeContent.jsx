@@ -3,10 +3,10 @@ const HomeContent = ({ webData }) => {
     return (
         <div id='Home' className="home-main-div">
             <div className="main-container">
-                <h1 className="main-title animated-item">{webData.home[0]?.titulo}</h1>
+                <h1 className="main-title animated-item">{webData.home?.titulo}</h1>
                 <a target="_blank" rel="noopener noreferrer"
                    className="main-image-container">
-                    <img className="home-main-image animated-item" src={webData.home[0]?.imagen} alt="mainImage"/>
+                    <img className="home-main-image animated-item" src={webData.home?.imagen} alt="mainImage"/>
                 </a>
                 <div className="main-text">
                     <nav className="navHome">
