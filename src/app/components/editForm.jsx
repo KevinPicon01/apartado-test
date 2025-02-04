@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from 'next/router';
+import  useRouter from 'next/router';
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
