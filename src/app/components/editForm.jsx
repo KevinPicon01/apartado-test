@@ -85,11 +85,14 @@ const EditForm = () => {
 
     const handleSave = async () => {
         try {
+            const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+            await pause(5000);
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const json = JSON.stringify(formData);
             console.log("📤 Enviando datos:", json);
-
+            await pause(5000);
             const res = await fetch("api/updateWeb", {
                 method: "POST",
                 headers: {
@@ -99,10 +102,11 @@ const EditForm = () => {
                 rawBody: json,
                 signal: controller.signal
             });
+            await pause(10000);
             clearTimeout(timeout);
 
             console.log("📩 Respuesta del servidor:", res);
-
+            await pause(10000);
             const text = await res.json();
             console.log("🔄 Respuesta en texto:", text);
 
