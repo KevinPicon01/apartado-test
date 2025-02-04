@@ -83,6 +83,37 @@ const EditForm = () => {
     if (loading) return <div>🔄 Cargando datos...</div>;
     if (!webData) return <div>❌ No se encontraron datos.</div>;
 
+    const handleSave = async () => {
+        try {
+            console.log("Guardando datos:", formData);
+            const res = await fetch("/api/updateWeb", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json",  "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Methods": "*" },
+
+                body: JSON.stringify(formData),
+            });
+
+            console.log("📩 Respuesta del servidor:", res);
+
+            // Verifica si la respuesta es JSON antes de hacer res.json()
+            const text = await res.text();
+            console.log("🔄 Respuesta en texto:", text);
+
+            const result = text ? JSON.parse(text) : {}; // Parsea solo si hay contenido
+
+            if (res.ok) {
+                alert("Cambios guardados con éxito");
+            } else {
+                alert("Error al guardar: " + (result.message || "Respuesta inesperada"));
+            }
+        } catch (error) {
+            console.error("❌ Error guardando datos:", error);
+            alert("Error al guardar: " + error.message);
+        }
+    };
+
+
+
     return (
         <div className="flex gap-4 p-4 h-screen">
             {/* Formulario de edición */}
@@ -94,6 +125,7 @@ const EditForm = () => {
                         <input
                             type="text"
                             name="home.titulo"
+                            placeholder={webData.home.titulo}
                             onChange={handleChange}
                             className="border p-2 w-full"
                         />
@@ -102,6 +134,7 @@ const EditForm = () => {
                         <label className="block">Texto About Us:</label>
                         <textarea
                             name="about_us.texto"
+                            placeholder={webData.about_us.texto}
                             onChange={handleChange}
                             className="border p-2 w-full"
                         />
@@ -111,10 +144,14 @@ const EditForm = () => {
                         <input
                             type="text"
                             name="footer.slogan"
+                            placeholder={webData.footer.slogan}
                             onChange={handleChange}
                             className="border p-2 w-full"
                         />
                     </div>
+                    <button onClick={handleSave} className="mt-4 bg-blue-500 text-white p-2 rounded">
+                        Guardar Cambios
+                    </button>
                 </form>
             </div>
 
