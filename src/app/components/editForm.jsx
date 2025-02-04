@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
@@ -85,6 +85,7 @@ const EditForm = () => {
 
     const handleSave = async () => {
         try {
+            const router = useRouter();
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const json = JSON.stringify(formData);
@@ -99,6 +100,7 @@ const EditForm = () => {
                 rawBody: json,
                 signal: controller.signal
             });
+            router.push('/');
             clearTimeout(timeout);
 
             console.log("📩 Respuesta del servidor:", res);
