@@ -14,8 +14,19 @@ export async function POST(req) {
     });
 
     if (user && bcrypt.compareSync(password, user.password)) {
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
+        return new Response(JSON.stringify({ success: true }), { status: 200,
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },});
     }
 
-    return new Response(JSON.stringify({ success: false }), { status: 401 });
+    return new Response(JSON.stringify({ success: false }), { status: 401, headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }, });
 }

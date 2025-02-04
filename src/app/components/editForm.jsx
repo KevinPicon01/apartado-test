@@ -85,21 +85,33 @@ const EditForm = () => {
 
     const handleSave = async () => {
         try {
-            console.log("Guardando datos:", formData);
-            const res = await fetch("/api/updateWeb", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Accept": "application/json",  "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Methods": "*" },
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+            const json = JSON.stringify(formData);
+            console.log("📤 Enviando datos:", json);
 
-                body: JSON.stringify(formData),
+            const res = await fetch("api/updateWeb", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: json,
+                rawBody: json,
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
             console.log("📩 Respuesta del servidor:", res);
 
-            // Verifica si la respuesta es JSON antes de hacer res.json()
             const text = await res.text();
             console.log("🔄 Respuesta en texto:", text);
 
-            const result = text ? JSON.parse(text) : {}; // Parsea solo si hay contenido
+            let result = {}; // Inicializamos con un objeto vacío por si el JSON es inválido
+            try {
+                result = text ? JSON.parse(text) : {};
+            } catch (jsonError) {
+                console.error("❌ Error parseando JSON:", jsonError);
+            }
 
             if (res.ok) {
                 alert("Cambios guardados con éxito");
@@ -110,6 +122,7 @@ const EditForm = () => {
             console.error("❌ Error guardando datos:", error);
             alert("Error al guardar: " + error.message);
         }
+
     };
 
 

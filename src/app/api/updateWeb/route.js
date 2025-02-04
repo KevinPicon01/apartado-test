@@ -2,15 +2,19 @@
 import prisma from "@/lib/prisma";
 import id from "../../texts"
 import {console} from "next/dist/compiled/@edge-runtime/primitives";
-import {json} from "next/dist/client/components/react-dev-overlay/server/shared";
+import {white} from "next/dist/lib/picocolors";
 
 
 export async function POST(req) {
     try {
 
-        const body = await req.json();
+        const rawBody = await req.text(); // Leer el body como texto
+        console.log("Raw body recibido:", rawBody);
 
-        const updatedWeb = await prisma.webs.update({
+        const body = JSON.parse(rawBody); // Intentar parsearlo manualmente
+        console.log("Body parseado correctamente:", body);
+
+        await prisma.webs.update({
             where: { id: body.id },
             data: {
                 color1: body.color1,
@@ -19,92 +23,95 @@ export async function POST(req) {
                 link1: body.link1,
                 link2: body.link2,
                 link3: body.link3,
-
-                header: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: { logo: body.header.logo }
-                    }
-                },
-                home: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            titulo: body.home.titulo,
-                            imagen: body.home.imagen
-                        }
-                    }
-                },
-                about_us: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            titulo: body.about_us.titulo,
-                            texto: body.about_us.texto,
-                            imagen: body.about_us.imagen
-                        }
-                    }
-                },
-                catalogo: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            titulo: body.catalogo.titulo,
-                            texto: body.catalogo.texto,
-                            imagen: body.catalogo.imagen
-                        }
-                    }
-                },
-                members: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            titulo: body.members.titulo,
-                            texto: body.members.texto,
-                            imagen: body.members.imagen
-                        }
-                    }
-                },
-                contact_us: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            texto: body.contact_us.texto,
-                            imagen: body.contact_us.imagen
-                        }
-                    }
-                },
-                footer: {
-                    updateMany: {
-                        where: { pagina: body.id },
-                        data: {
-                            logo: body.footer.logo,
-                            slogan: body.footer.slogan,
-                            correo: body.footer.correo,
-                            numero: body.footer.numero,
-                            logo1: body.footer.logo1,
-                            logo2: body.footer.logo2,
-                            logo3: body.footer.logo3
-                        }
-                    }
-                }
-            }
+            },
         });
 
-        return new Response(JSON.stringify(
-            {
-                status: 200,
-                headers: { "Content-Type": "application/json","Access-Control-Allow-Origin": "*", },
-
-            }
-        ));
-
+        if (body.header){
+            console.log("init header")
+            await prisma.header.update({
+                    where: {
+                        id: body.header.id
+                    },
+                    data: {
+                        logo: body.header.logo
+                    },
+            })
+        }
+        if (body.home){
+            console.log("init home")
+            await prisma.home.update({
+                where: {
+                    id: body.home.id
+                },
+                data: body.home,
+            })
+        }
+        if (body.about_us){
+            console.log("init body")
+            await prisma.about_us.update({
+                where:{
+                    id: body.about_us.id
+                },
+                data: body.about_us,
+            })
+        }
+        if (body.catalogo){
+            console.log("init catalogo")
+            await prisma.catalogo.update({
+                where:{
+                    id: body.catalogo.id
+                },
+                data: body.catalogo,
+            })
+        }
+        if (body.members){
+            console.log("init members")
+            await prisma.members.update({
+                where:{
+                    id: body.members.id
+                },
+                data: body.members,
+            })
+        }
+        if (body.contact_us){
+            console.log("init contact_us")
+            await prisma.contact_us.update({
+                where:{
+                    id: body.contact_us.id
+                },
+                data: body.contact_us,
+            })
+        }
+        if (body.footer){
+            console.log("init footer")
+            await prisma.footer.update({
+                where:{
+                    id: body.footer.id
+                },
+                data: body.footer,
+            })
+        }
+       console.log("Actualización completada");
+        return new Response(JSON.stringify({ message: "Todo salió bien" }), {
+            status: 200,
+            headers: {
+                "Connection": "keep-alive",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
+        });
     } catch (error) {
-        console.error("❌ Error al procesar JSON:", error);
-        return new Response(JSON.stringify({ success: false, error: "Invalid JSON" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json","Access-Control-Allow-Origin": "*", },
+        console.error("Error al procesar JSON:", error);
+        return new Response(JSON.stringify({ error: "JSON inválido" }), { status: 400,
+            headers: {
+                "Connection": "keep-alive",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
         });
     }
 }
-
