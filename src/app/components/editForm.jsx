@@ -1,5 +1,4 @@
 "use client";
-import  useRouter from 'next/router';
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
@@ -83,11 +82,14 @@ const EditForm = () => {
     if (loading) return <div>🔄 Cargando datos...</div>;
     if (!webData) return <div>❌ No se encontraron datos.</div>;
 
-    const handleSave = async () => {
+    import { useRouter } from 'next/router';
+
+    const handleSave = async (formData) => {
+        const router = useRouter();
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000); // Timeout de 5 segundos
+
         try {
-            const router = useRouter();
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
             const json = JSON.stringify(formData);
             console.log("📤 Enviando datos:", json);
 
@@ -97,29 +99,28 @@ const EditForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: json,
-                rawBody: json,
-                signal: controller.signal
+                signal: controller.signal, // Pasar la señal para el timeout
             });
-            router.push('/');
-            clearTimeout(timeout);
 
-            console.log("📩 Respuesta del servidor:", res);
-
-            const text = await res.json();
-            console.log("🔄 Respuesta en texto:", text);
-
-
+            clearTimeout(timeout); // Limpiar el timeout después de la respuesta
 
             if (!res.ok) {
-                alert("Error al guardar: " + (result.message || "Respuesta inesperada"));
+                throw new Error("Error al guardar los datos");
             }
+
+            const data = await res.json();
+            console.log("📩 Respuesta del servidor:", data);
+
+            // Si todo salió bien, redirige
             alert("Datos guardados correctamente");
+            router.push('/'); // Redirige a la página raíz
+
         } catch (error) {
             console.error("❌ Error guardando datos:", error);
             alert("Error al guardar: " + error.message);
         }
-
     };
+
 
 
 
