@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from 'next/router';
+
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
@@ -83,14 +83,10 @@ const EditForm = () => {
     if (loading) return <div>🔄 Cargando datos...</div>;
     if (!webData) return <div>❌ No se encontraron datos.</div>;
 
-
-
-    const handleSave = async (formData) => {
-        const router = useRouter();
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 5000); // Timeout de 5 segundos
-
+    const handleSave = async () => {
         try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
             const json = JSON.stringify(formData);
             console.log("📤 Enviando datos:", json);
 
@@ -100,28 +96,28 @@ const EditForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: json,
-                signal: controller.signal, // Pasar la señal para el timeout
+                rawBody: json,
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
-            clearTimeout(timeout); // Limpiar el timeout después de la respuesta
+            console.log("📩 Respuesta del servidor:", res);
+
+            const text = await res.json();
+            console.log("🔄 Respuesta en texto:", text);
+
+
 
             if (!res.ok) {
-                throw new Error("Error al guardar los datos");
+                alert("Error al guardar: " + (result.message || "Respuesta inesperada"));
             }
-
-            const data = await res.json();
-            console.log("📩 Respuesta del servidor:", data);
-
-            // Si todo salió bien, redirige
             alert("Datos guardados correctamente");
-            router.push('/'); // Redirige a la página raíz
-
         } catch (error) {
             console.error("❌ Error guardando datos:", error);
             alert("Error al guardar: " + error.message);
         }
-    };
 
+    };
 
 
 
