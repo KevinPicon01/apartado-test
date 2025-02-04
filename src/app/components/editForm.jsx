@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
@@ -82,7 +83,7 @@ const EditForm = () => {
     if (loading) return <div>🔄 Cargando datos...</div>;
     if (!webData) return <div>❌ No se encontraron datos.</div>;
 
-    import { useRouter } from 'next/router';
+
 
     const handleSave = async (formData) => {
         const router = useRouter();
