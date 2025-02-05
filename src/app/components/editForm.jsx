@@ -1,5 +1,5 @@
 "use client";
-
+import { useRef } from "react";
 import { useState, useEffect } from "react";
 import id from "../texts";
 import Header from "@/app/components/header";
@@ -61,16 +61,19 @@ const EditForm = () => {
     }, [id]);
 
 
+
+    const listaRef = useRef([]);
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         const keys = name.split(".");
 
         setFormData((prev) => {
-            const updatedData = { ...prev }; // Clonamos el estado
+            const updatedData = { ...prev };
             let ref = updatedData;
 
             for (let i = 0; i < keys.length - 1; i++) {
-                if (!ref[keys[i]]) ref[keys[i]] = { ...prev[keys[i]] }; // Clonar niveles intermedios
+                if (!ref[keys[i]]) ref[keys[i]] = { ...prev[keys[i]] };
                 ref = ref[keys[i]];
             }
 
@@ -91,23 +94,32 @@ const EditForm = () => {
                         return prev;
                     }
 
+                    // Verificar si ya se guardó antes
+                    const yaGuardado = listaRef.current.some((item) => item.campo === name);
+
+                    if (!yaGuardado) {
+                        listaRef.current.push({ campo: name, valor: ref[keys[keys.length - 1]] });
+                    }
+
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        ref[keys[keys.length - 1]] = event.target.result; // Guardamos la URL base64
+                        ref[keys[keys.length - 1]] = event.target.result;
                         setFormData({ ...updatedData });
                     };
                     reader.readAsDataURL(file);
                 }
             } else {
-                ref[keys[keys.length - 1]] = value; // Asignamos el valor correcto
+                ref[keys[keys.length - 1]] = value;
             }
 
             return updatedData;
         });
 
-    document.documentElement.style.setProperty("--secondBackground", formData.color1);
+        document.documentElement.style.setProperty("--secondBackground", formData.color1);
         document.documentElement.style.setProperty("--shadowColor", formData.color2);
         document.documentElement.style.setProperty("--hoverColor", formData.color3);
+
+        console.log(listaRef.current);
     };
 
 
@@ -127,7 +139,6 @@ const EditForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: json,
-                rawBody: json,
                 signal: controller.signal
             });
             clearTimeout(timeout);
