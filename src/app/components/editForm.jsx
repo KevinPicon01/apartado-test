@@ -118,8 +118,6 @@ const EditForm = () => {
         document.documentElement.style.setProperty("--secondBackground", formData.color1);
         document.documentElement.style.setProperty("--shadowColor", formData.color2);
         document.documentElement.style.setProperty("--hoverColor", formData.color3);
-
-        console.log(listaRef.current);
     };
 
 
@@ -128,6 +126,12 @@ const EditForm = () => {
 
     const handleSave = async () => {
         try {
+            // Validar que formData no esté vacío
+            if (!formData || Object.keys(formData).length === 0) {
+                alert("No hay datos para guardar.");
+                return;
+            }
+
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000);
             const json = JSON.stringify(formData);
@@ -148,17 +152,19 @@ const EditForm = () => {
             const text = await res.json();
             console.log("🔄 Respuesta en texto:", text);
 
-
-
             if (!res.ok) {
-                alert("Error al guardar: " + (result.message || "Respuesta inesperada"));
+                alert("Error al guardar: " + (text.message || "Respuesta inesperada"));
+            } else {
+                alert("Datos guardados correctamente");
             }
-            alert("Datos guardados correctamente");
         } catch (error) {
-            console.error("❌ Error guardando datos:", error);
-            alert("Error al guardar: " + error.message);
+            console.error("❌ Error guardando datos:", error.stack || error);
+            if (error.name === "AbortError") {
+                alert("La solicitud tardó demasiado. Por favor, intenta de nuevo.");
+            } else {
+                alert("Error al guardar: " + (error.message || "Error desconocido"));
+            }
         }
-
     };
 
 
