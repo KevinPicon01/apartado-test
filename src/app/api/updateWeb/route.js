@@ -6,10 +6,10 @@ export async function POST(req) {
     try {
 
         const rawBody = await req.text(); // Leer el body como texto
-        console.log("Raw body recibido:", rawBody);
+
 
         const body = JSON.parse(rawBody); // Intentar parsearlo manualmente
-        console.log("Body parseado correctamente:", body);
+
 
         await prisma.webs.update({
             where: { id: body.id },
@@ -24,7 +24,6 @@ export async function POST(req) {
         });
 
         if (body.header){
-            console.log("init header")
             await prisma.header.update({
                     where: {
                         id: body.header.id
@@ -35,7 +34,6 @@ export async function POST(req) {
             })
         }
         if (body.home){
-            console.log("init home")
             await prisma.home.update({
                 where: {
                     id: body.home.id
@@ -44,7 +42,6 @@ export async function POST(req) {
             })
         }
         if (body.about_us){
-            console.log("init body")
             await prisma.about_us.update({
                 where:{
                     id: body.about_us.id
@@ -53,7 +50,6 @@ export async function POST(req) {
             })
         }
         if (body.catalogo){
-            console.log("init catalogo")
             await prisma.catalogo.update({
                 where:{
                     id: body.catalogo.id
@@ -62,7 +58,6 @@ export async function POST(req) {
             })
         }
         if (body.members){
-            console.log("init members")
             await prisma.members.update({
                 where:{
                     id: body.members.id
@@ -71,7 +66,6 @@ export async function POST(req) {
             })
         }
         if (body.contact_us){
-            console.log("init contact_us")
             await prisma.contact_us.update({
                 where:{
                     id: body.contact_us.id
@@ -80,7 +74,6 @@ export async function POST(req) {
             })
         }
         if (body.footer){
-            console.log("init footer")
             await prisma.footer.update({
                 where:{
                     id: body.footer.id
@@ -88,7 +81,6 @@ export async function POST(req) {
                 data: body.footer,
             })
         }
-       console.log("Actualización completada");
         return new Response(JSON.stringify({ message: "Todo salió bien" }), {
             status: 200,
             headers: {
@@ -100,7 +92,6 @@ export async function POST(req) {
             },
         });
     } catch (error) {
-        console.error("Error al procesar JSON:", error);
         return new Response(JSON.stringify({ error: "JSON inválido" }), { status: 400,
             headers: {
                 "Connection": "keep-alive",

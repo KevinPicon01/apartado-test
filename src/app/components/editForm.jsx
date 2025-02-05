@@ -147,10 +147,8 @@ const EditForm = () => {
             });
             clearTimeout(timeout);
 
-            console.log("📩 Respuesta del servidor:", res);
 
             const text = await res.json();
-            console.log("🔄 Respuesta en texto:", text);
 
             if (!res.ok) {
                 alert("Error al guardar: " + (text.message || "Respuesta inesperada"));
