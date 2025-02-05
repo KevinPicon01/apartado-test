@@ -24,7 +24,7 @@ const TheHeader = ({ webData }) => {
                     <ul>
                         <li>
                             <a
-                                href="/#Home"
+                                href="#Home"
                                 onClick={() => {
                                     document.getElementById('navbar').style.display = 'none';
                                 }}
@@ -34,7 +34,7 @@ const TheHeader = ({ webData }) => {
                         </li>
                         <li>
                             <a
-                                href="/#Catalogue"
+                                href="#Catalogue"
                                 onClick={() => {
                                     document.getElementById('navbar').style.display = 'none';
                                 }}
@@ -44,7 +44,7 @@ const TheHeader = ({ webData }) => {
                         </li>
                         <li>
                             <a
-                                href="/#About"
+                                href="#About"
                                 onClick={() => {
                                     document.getElementById('navbar').style.display = 'none';
                                 }}
@@ -54,7 +54,7 @@ const TheHeader = ({ webData }) => {
                         </li>
                         <li>
                             <a
-                                href="/#ContactUs"
+                                href="#ContactUs"
                                 onClick={() => {
                                     document.getElementById('navbar').style.display = 'none';
                                 }}
@@ -65,15 +65,15 @@ const TheHeader = ({ webData }) => {
                     </ul>
                 </nav>
                 <nav className="navigation">
-                    <a href="/#Home" >Inicio</a>
-                    <a href="/#About" className="borderLin">Nosotros</a>
+                    <a href="#Home" >Inicio</a>
+                    <a href="#About" className="borderLin">Nosotros</a>
                 </nav>
                 <div className="logo">
                     <img src={webData.header?.logo} alt="Logo"/>
                 </div>
                 <nav className="navigation">
-                    <a href="/#Catalogue">Catalogo</a>
-                    <a href="/#ContactUs" className="borderLin" >Cotizar</a>
+                    <a href="#Catalogue">Catalogo</a>
+                    <a href="#ContactUs" className="borderLin" >Cotizar</a>
                 </nav>
             </header>
         </>
