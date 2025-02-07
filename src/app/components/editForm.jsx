@@ -70,20 +70,18 @@ const EditForm = () => {
         const formData = new FormData();
         formData.append("file", blob, file.name); // Asegúrate de incluir el nombre del archivo
 
-        const controller = new AbortController(); // Controlador para cancelar si tarda mucho
-        const timeoutId = setTimeout(() => controller.abort(), 50000); // 20s de timeout
-
         const res = await fetch("/api/uploadFileToS3", {
             method: "POST",
             body: formData
         });
-
+        console.log("Respuesta de S3:", res);
         const data = await res.json();
-
+        console.log("Data de S3:", data);
         if (data.success) {
             console.log(`Archivo subido a S3:`);
             return data.url;
         }
+
 
         return console.error("Error al subir archivo a S3");
     };
