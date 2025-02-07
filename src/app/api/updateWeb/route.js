@@ -1,7 +1,8 @@
 // src/app/api/verifyPassword.js
 import prisma from "@/lib/prisma";
 
-export async function PUT(req) {
+
+export async function POST(req) {
     try {
         const rawBody = await req.text();
         const body = JSON.parse(rawBody);

@@ -124,7 +124,7 @@ const EditForm = () => {
     if (loading) return <div>🔄 Cargando datos...</div>;
     if (!webData) return <div>❌ No se encontraron datos.</div>;
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
         try {
             // Validar que formData no esté vacío
             if (!formData || Object.keys(formData).length === 0) {
@@ -132,32 +132,22 @@ const EditForm = () => {
                 return;
             }
 
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 5000);
-            const json = JSON.stringify(formData);
             console.log("📤 Enviando datos:", json);
-
-            const res = await fetch("api/updateWeb", {
-                method: "PUT",
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS",
-                    "Access-Control-Allow-Headers": "Content-Type",
-                    "Content-Type": "application/json",
-                },
-                body: json,
-                credentials: "include",
+            e.preventDefault();
+            const res = await fetch("/api/updateWeb", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({formData}),
             });
-            clearTimeout(timeout);
-            console.log("📥 Respuesta:", res);
 
-            const text = await res.json();
+            const data = await res.json();
 
-            if (!res.ok) {
-                alert("Error al guardar: " + (text.message || "Respuesta inesperada"));
-            } else {
+            if (data.success) {
                 alert("Datos guardados correctamente");
+            } else {
+                alert("Error al guardar: " + (text.message || "Respuesta inesperada"));
             }
+
         } catch (error) {
             console.error("❌ Error guardando datos:", error.stack || error);
             if (error.name === "AbortError") {
