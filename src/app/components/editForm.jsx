@@ -141,7 +141,7 @@ const EditForm = () => {
                 method: "PUT",
                 headers: {
                     "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+                    "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS",
                     "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
                 },

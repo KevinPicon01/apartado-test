@@ -65,7 +65,7 @@ export async function PUT(req) {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, OPTIONS",
+                "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type"
             },});
     } catch (error) {
