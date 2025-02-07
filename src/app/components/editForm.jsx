@@ -138,15 +138,18 @@ const EditForm = () => {
             console.log("📤 Enviando datos:", json);
 
             const res = await fetch("api/updateWeb", {
-                method: "POST",
+                method: "PUT",
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
                 },
                 body: json,
-                signal: controller.signal
+                credentials: "include",
             });
             clearTimeout(timeout);
-
+            console.log("📥 Respuesta:", res);
 
             const text = await res.json();
 
