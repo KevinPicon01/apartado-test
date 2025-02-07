@@ -1,22 +1,24 @@
 "use client";
-import { useRef } from "react";
-import { useState, useEffect } from "react";
+import AWS from 'aws-sdk';
+import {useEffect, useRef, useState} from "react";
 import id from "../texts";
-import Header from "@/app/components/header";
+import TheHeader from "@/app/components/header";
 import HomeContent from "@/app/components/homeContent";
 import PreHeader from "@/app/components/preHeader";
-import TheHeader from "@/app/components/header";
 import About from "@/app/components/about";
 import ContactUs from "@/app/components/contactUs";
 import Catalogue from "@/app/components/catalogue";
 import Members from "@/app/components/members";
 import TheFooter from "@/app/components/footer";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 const EditForm = () => {
-
+    const [globalFile, setFile] = useState(null);
     const [webData, setWebData] = useState(null);
     const [formData, setFormData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const listaRef = useRef([]);
+
 
     useEffect(() => {
         if (!id) {
@@ -60,10 +62,74 @@ const EditForm = () => {
         fetchData();
     }, [id]);
 
+    const uploadFileToS3 = async (file) => {
+
+        console.log("file", file);
+
+        const blob = new Blob([file], { type: file.type });
+
+        console.log("blob", blob);
+
+        const formData = new FormData();
+        formData.append("file", blob, file.name); // Asegúrate de incluir el nombre del archivo
 
 
-    const listaRef = useRef([]);
+        for (const pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+        const res = await fetch("/api/uploadFileToS3", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: formData,
+        });
+        console.log("esperando respuestas");
 
+        const data = await res.json();
+
+        if (data.success) {
+            console.log(`Archivo subido a S3:`);
+            return data.url;
+        }
+
+        return console.error("Error al subir archivo a S3");
+    };
+    const deleteS3Item = async (fileUrl) => {
+        const res = await fetch("/api/deleteS3Item", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fileUrl }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            console.log(`Archivo eliminado de S3`);
+        }
+        return console.error("Error al eliminar archivo de S3");
+    };
+    const processFilesAndUpdateFormData = async () => {
+        const updatedFormData = { ...formData }; // Copia de formData para actualizarlo
+
+        // Recorrer los elementos en listaRef
+        for (const item of listaRef.current) {
+            const { campo, valor, file } = item;
+            // Si hay un archivo (nuevo archivo a subir)
+            if (file) {
+                try {
+                    updatedFormData[campo] = await uploadFileToS3(file);
+                   // await deleteS3Item(valor); // Eliminar el archivo viejo de S3
+
+                } catch (error) {
+                    console.error("Error al subir archivo:", error);
+                    alert("Error al subir archivo. Intenta de nuevo.");
+                    return false; // Devolver false si ocurre un error
+                }
+            }
+        }
+
+        // Si todo va bien, actualizar formData con los nuevos datos
+        setFormData(updatedFormData);
+        return true; // Retorna true si todo se procesó correctamente
+    };
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         const keys = name.split(".");
@@ -98,7 +164,7 @@ const EditForm = () => {
                     const yaGuardado = listaRef.current.some((item) => item.campo === name);
 
                     if (!yaGuardado) {
-                        listaRef.current.push({ campo: name, valor: ref[keys[keys.length - 1]] });
+                        listaRef.current.push({ campo: name, valor: ref[keys[keys.length - 1]], file: file });
                     }
 
                     const reader = new FileReader();
@@ -119,11 +185,6 @@ const EditForm = () => {
         document.documentElement.style.setProperty("--shadowColor", formData.color2);
         document.documentElement.style.setProperty("--hoverColor", formData.color3);
     };
-
-
-    if (loading) return <div>🔄 Cargando datos...</div>;
-    if (!webData) return <div>❌ No se encontraron datos.</div>;
-
     const handleSave = async (e) => {
         try {
             // Validar que formData no esté vacío
@@ -131,9 +192,10 @@ const EditForm = () => {
                 alert("No hay datos para guardar.");
                 return;
             }
+            await processFilesAndUpdateFormData()
 
 
-            console.log("📤 Enviando datos:");
+            console.log("📤 Enviando datos:", formData);
             e.preventDefault();
             const res = await fetch("/api/updateWeb", {
                 method: "POST",
@@ -160,7 +222,8 @@ const EditForm = () => {
     };
 
 
-
+    if (loading) return <div>🔄 Cargando datos...</div>;
+    if (!webData) return <div>❌ No se encontraron datos.</div>;
     return (
         <div className="flex gap-4 p-4 h-screen ">
             {/* Formulario de edición */}
