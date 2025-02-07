@@ -77,9 +77,8 @@ const EditForm = () => {
         for (const pair of formData.entries()) {
             console.log(pair[0], pair[1]);
         }
-        const res = await fetch("/api/uploadFileToS3/", {
+        const res = await fetch("api/uploadFileToS3", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: formData,
         });
         console.log("esperando respuestas");
