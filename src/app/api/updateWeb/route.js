@@ -4,8 +4,10 @@ import prisma from "@/lib/prisma";
 
 export async function POST(req) {
     try {
+        console.log("Init updateWeb POST")
         const rawBody = await req.text();
         const body = JSON.parse(rawBody);
+        console.log("Received data", body)
 
         await prisma.webs.update({
             where: { id: body.id },

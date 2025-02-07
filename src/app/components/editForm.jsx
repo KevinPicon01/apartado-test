@@ -132,12 +132,13 @@ const EditForm = () => {
                 return;
             }
 
+
             console.log("📤 Enviando datos:");
             e.preventDefault();
             const res = await fetch("/api/updateWeb", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({formData}),
+                body: JSON.stringify(formData),
             });
 
             const data = await res.json();
@@ -145,7 +146,7 @@ const EditForm = () => {
             if (data.success) {
                 alert("Datos guardados correctamente");
             } else {
-                alert("Error al guardar: " + (text.message || "Respuesta inesperada"));
+                alert("Error al guardar: " + ("Respuesta inesperada"));
             }
 
         } catch (error) {
