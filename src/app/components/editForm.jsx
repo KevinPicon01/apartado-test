@@ -132,7 +132,7 @@ const EditForm = () => {
                 return;
             }
 
-            console.log("📤 Enviando datos:", json);
+            console.log("📤 Enviando datos:");
             e.preventDefault();
             const res = await fetch("/api/updateWeb", {
                 method: "POST",
