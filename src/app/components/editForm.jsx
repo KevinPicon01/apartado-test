@@ -63,25 +63,20 @@ const EditForm = () => {
     }, [id]);
 
     const uploadFileToS3 = async (file) => {
+        console.log("Subiendo archivo a S3...");
 
-        console.log("file", file);
 
         const blob = new Blob([file], { type: file.type });
-
-        console.log("blob", blob);
-
         const formData = new FormData();
         formData.append("file", blob, file.name); // Asegúrate de incluir el nombre del archivo
 
+        const controller = new AbortController(); // Controlador para cancelar si tarda mucho
+        const timeoutId = setTimeout(() => controller.abort(), 50000); // 20s de timeout
 
-        for (const pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-        }
-        const res = await fetch("api/uploadFileToS3", {
+        const res = await fetch("/api/uploadFileToS3", {
             method: "POST",
-            body: formData,
+            body: formData
         });
-        console.log("esperando respuestas");
 
         const data = await res.json();
 

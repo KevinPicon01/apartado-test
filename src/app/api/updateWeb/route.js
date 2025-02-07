@@ -7,7 +7,6 @@ export async function POST(req) {
         console.log("Init updateWeb POST")
         const rawBody = await req.text();
         const body = JSON.parse(rawBody);
-    console.log("HOME", body.home)
         await prisma.webs.update({
             where: { id: body.id },
             data: {
