@@ -62,7 +62,7 @@ const EditForm = () => {
         fetchData();
     }, [id]);
 
-    const uploadFileToS3 = async (file) => {
+    const uploadFileToS3 = async (file, e) => {
         console.log("Subiendo archivo a S3...");
 
 
@@ -70,9 +70,13 @@ const EditForm = () => {
         const formData = new FormData();
         formData.append("file", blob, file.name); // Asegúrate de incluir el nombre del archivo
 
+        e.preventDefault();
         const res = await fetch("/api/uploadFileToS3", {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+            }
         });
         console.log("Respuesta de S3:", res);
         const data = await res.json();
@@ -98,7 +102,7 @@ const EditForm = () => {
         }
         return console.error("Error al eliminar archivo de S3");
     };
-    const processFilesAndUpdateFormData = async () => {
+    const processFilesAndUpdateFormData = async (e) => {
         const updatedFormData = { ...formData }; // Copia de formData para actualizarlo
 
         // Recorrer los elementos en listaRef
@@ -107,7 +111,7 @@ const EditForm = () => {
             // Si hay un archivo (nuevo archivo a subir)
             if (file) {
                 try {
-                    updatedFormData[campo] = await uploadFileToS3(file);
+                    updatedFormData[campo] = await uploadFileToS3(file, e);
                    // await deleteS3Item(valor); // Eliminar el archivo viejo de S3
 
                 } catch (error) {
@@ -184,7 +188,7 @@ const EditForm = () => {
                 alert("No hay datos para guardar.");
                 return;
             }
-            await processFilesAndUpdateFormData()
+            await processFilesAndUpdateFormData(e)
 
 
             console.log("📤 Enviando datos:", formData);
