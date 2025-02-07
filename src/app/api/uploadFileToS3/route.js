@@ -31,13 +31,7 @@ export async function POST(req) {
               return data.Location;
          };
 
-       // const data = await Promise.race([s3Promise, timeoutPromise]);
-       //  await new Promise((resolve, _) => {
-       //      setTimeout(() => resolve(console.log("⏳ Tiempo de espera excedido")), 1000); // 1s timeout
-       //  })
-       console.log("Uploading to S3");
        const imageUrl = await uploadToS3();
-       console.log("Upload complete");
 
        return new Response(JSON.stringify({ success: true, url: imageUrl}), {
           status: 200,

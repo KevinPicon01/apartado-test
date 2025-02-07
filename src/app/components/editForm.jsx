@@ -89,7 +89,8 @@ const EditForm = () => {
 
         return console.error("Error al subir archivo a S3");
     };
-    const deleteS3Item = async (fileUrl) => {
+    const deleteS3Item = async (fileUrl, e) => {
+        e.preventDefault();
         const res = await fetch("/api/deleteS3Item", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -98,9 +99,25 @@ const EditForm = () => {
         const data = await res.json();
 
         if (data.success) {
-            console.log(`Archivo eliminado de S3`);
+           return console.log(`Archivo eliminado de S3`);
         }
         return console.error("Error al eliminar archivo de S3");
+    };
+    const updateNestedProperty = (obj, path, value) => {
+        const keys = path.split("."); // Divide la ruta en un array de claves
+        let current = obj;
+
+        // Recorre las claves para llegar al último nivel
+        for (let i = 0; i < keys.length - 1; i++) {
+            const key = keys[i];
+            if (!current[key]) {
+                current[key] = {}; // Si no existe, crea un objeto vacío
+            }
+            current = current[key];
+        }
+
+        // Asigna el valor a la última clave
+        current[keys[keys.length - 1]] = value;
     };
     const processFilesAndUpdateFormData = async (e) => {
         const updatedFormData = { ...formData }; // Copia de formData para actualizarlo
@@ -108,18 +125,18 @@ const EditForm = () => {
         // Recorrer los elementos en listaRef
         for (const item of listaRef.current) {
             const { campo, valor, file } = item;
-            // Si hay un archivo (nuevo archivo a subir)
-            if (file) {
                 try {
-                    updatedFormData[campo] = await uploadFileToS3(file, e);
-                   // await deleteS3Item(valor); // Eliminar el archivo viejo de S3
+                    const url = await uploadFileToS3(file, e);
+                    updateNestedProperty(updatedFormData, campo, url);
+                    console.log("📤 Subiendo archivo:");
+                    console.log(updatedFormData.home.imagen);
+                   await deleteS3Item(valor, e); // Eliminar el archivo viejo de S3
 
                 } catch (error) {
                     console.error("Error al subir archivo:", error);
                     alert("Error al subir archivo. Intenta de nuevo.");
                     return false; // Devolver false si ocurre un error
                 }
-            }
         }
 
         // Si todo va bien, actualizar formData con los nuevos datos
@@ -206,6 +223,7 @@ const EditForm = () => {
             } else {
                 alert("Error al guardar: " + ("Respuesta inesperada"));
             }
+            window.location.href = '/';
 
         } catch (error) {
             console.error("❌ Error guardando datos:", error.stack || error);
@@ -225,11 +243,18 @@ const EditForm = () => {
             {/* Formulario de edición */}
             <div className="w-1/3 h-full overflow-auto p-4 border rounded-lg shadow-md items-center">
                 <h2 className="text-xl font-bold mb-4">Editar Página</h2>
+                <button
+                    onClick={() => window.location.href = '/'} // Cambia esto según la ruta de tu inicio
+                    className="absolute z-[1000] top-5 right-5 bg-red-500 text-white px-3 py-2 rounded-lg shadow-md
+                   hover:bg-red-600 hover:shadow-lg active:bg-red-700 active:scale-95 transition-all duration-200"
+                >
+                    ⬅️ Volver al inicio
+                </button>
                 <form className="space-y-4">
                     {/* Colors Section */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">🎨 Colores</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
 
                         <div className="grid gap-4">
                             {/* Color 1 */}
@@ -241,7 +266,8 @@ const EditForm = () => {
                                     onChange={handleChange}
                                     className="border p-1 rounded"
                                 />
-                                <div className="w-10 h-10 rounded border" style={{ backgroundColor: formData.color1 }}></div>
+                                <div className="w-10 h-10 rounded border"
+                                     style={{backgroundColor: formData.color1}}></div>
                             </div>
 
                             {/* Color 2 */}
@@ -253,7 +279,8 @@ const EditForm = () => {
                                     onChange={handleChange}
                                     className="border p-1 rounded"
                                 />
-                                <div className="w-10 h-10 rounded border" style={{ backgroundColor: formData.color2 }}></div>
+                                <div className="w-10 h-10 rounded border"
+                                     style={{backgroundColor: formData.color2}}></div>
                             </div>
 
                             {/* Color 3 */}
@@ -265,7 +292,8 @@ const EditForm = () => {
                                     onChange={handleChange}
                                     className="border p-1 rounded"
                                 />
-                                <div className="w-10 h-10 rounded border" style={{ backgroundColor: formData.color3 }}></div>
+                                <div className="w-10 h-10 rounded border"
+                                     style={{backgroundColor: formData.color3}}></div>
                             </div>
                         </div>
                     </div>
@@ -273,7 +301,7 @@ const EditForm = () => {
                     {/* Links Section */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">🔗 Links</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
 
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
@@ -315,25 +343,30 @@ const EditForm = () => {
                     {/* Header */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">📌 Header</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="p-4 border rounded-lg shadow-md">
                             <label className="block font-medium">Logo Header:</label>
-                            <input type="file" accept="image/png, image/jpeg" name="header.logo" placeholder={webData.header.logo} onChange={handleChange} className="border p-2 w-full rounded" />
+                            <input type="file" accept="image/png, image/jpeg" name="header.logo"
+                                   placeholder={webData.header.logo} onChange={handleChange}
+                                   className="border p-2 w-full rounded"/>
                         </div>
                     </div>
 
                     {/* Home */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">🏡 Home</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título Home:</label>
-                                <input type="text" name="home.titulo" placeholder={webData.home.titulo} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="text" name="home.titulo" placeholder={webData.home.titulo}
+                                       onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Imagen Home:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="home.imagen" placeholder={webData.home.imagen} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="file" accept="image/png, image/jpeg" name="home.imagen"
+                                       placeholder={webData.home.imagen} onChange={handleChange}
+                                       className="border p-2 w-full rounded"/>
                             </div>
                         </div>
                     </div>
@@ -341,19 +374,23 @@ const EditForm = () => {
                     {/* About Us */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">ℹ️ About Us</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título About Us:</label>
-                                <input type="text" name="about_us.titulo" placeholder={webData.about_us.titulo} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="text" name="about_us.titulo" placeholder={webData.about_us.titulo}
+                                       onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Texto About Us:</label>
-                                <textarea name="about_us.texto" placeholder={webData.about_us.texto} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <textarea name="about_us.texto" placeholder={webData.about_us.texto}
+                                          onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Imagen About Us:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="about_us.imagen" placeholder={webData.about_us.imagen} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="file" accept="image/png, image/jpeg" name="about_us.imagen"
+                                       placeholder={webData.about_us.imagen} onChange={handleChange}
+                                       className="border p-2 w-full rounded"/>
                             </div>
                         </div>
                     </div>
@@ -361,19 +398,23 @@ const EditForm = () => {
                     {/* Catálogo */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">📦 Catálogo</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título Catálogo:</label>
-                                <input type="text" name="catalogo.titulo" placeholder={webData.catalogo.titulo} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="text" name="catalogo.titulo" placeholder={webData.catalogo.titulo}
+                                       onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Texto Catálogo:</label>
-                                <textarea name="catalogo.texto" placeholder={webData.catalogo.texto} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <textarea name="catalogo.texto" placeholder={webData.catalogo.texto}
+                                          onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Imagen Catálogo:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="catalogo.imagen" placeholder={webData.catalogo.imagen} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="file" accept="image/png, image/jpeg" name="catalogo.imagen"
+                                       placeholder={webData.catalogo.imagen} onChange={handleChange}
+                                       className="border p-2 w-full rounded"/>
                             </div>
                         </div>
                     </div>
@@ -381,19 +422,23 @@ const EditForm = () => {
                     {/* Miembros */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">👥 Miembros</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título Miembros:</label>
-                                <input type="text" name="members.titulo" placeholder={webData.members.titulo} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="text" name="members.titulo" placeholder={webData.members.titulo}
+                                       onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Texto Miembros:</label>
-                                <textarea name="members.texto" placeholder={webData.members.texto} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <textarea name="members.texto" placeholder={webData.members.texto}
+                                          onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Imagen Miembros:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="members.imagen" placeholder={webData.members.imagen} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="file" accept="image/png, image/jpeg" name="members.imagen"
+                                       placeholder={webData.members.imagen} onChange={handleChange}
+                                       className="border p-2 w-full rounded"/>
                             </div>
                         </div>
                     </div>
@@ -401,15 +446,18 @@ const EditForm = () => {
                     {/* Contacto */}
                     <div className="mt-6">
                         <h2 className="text-lg font-semibold mb-2">📞 Contacto</h2>
-                        <hr className="mb-4 border-gray-300" />
+                        <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Texto Contacto:</label>
-                                <textarea name="contact_us.texto" placeholder={webData.contact_us.texto} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <textarea name="contact_us.texto" placeholder={webData.contact_us.texto}
+                                          onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Imagen Contacto:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="contact_us.imagen" placeholder={webData.contact_us.imagen} onChange={handleChange} className="border p-2 w-full rounded" />
+                                <input type="file" accept="image/png, image/jpeg" name="contact_us.imagen"
+                                       placeholder={webData.contact_us.imagen} onChange={handleChange}
+                                       className="border p-2 w-full rounded"/>
                             </div>
                         </div>
                     </div>
@@ -444,23 +492,6 @@ const EditForm = () => {
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
 
-                            <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Logo Red Social 1:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="footer.logo1" placeholder={webData.footer.logo1}
-                                       onChange={handleChange} className="border p-2 w-full rounded"/>
-                            </div>
-
-                            <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Logo Red Social 2:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="footer.logo2" placeholder={webData.footer.logo2}
-                                       onChange={handleChange} className="border p-2 w-full rounded"/>
-                            </div>
-
-                            <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Logo Red Social 3:</label>
-                                <input type="file" accept="image/png, image/jpeg" name="footer.logo3" placeholder={webData.footer.logo3}
-                                       onChange={handleChange} className="border p-2 w-full rounded"/>
-                            </div>
                         </div>
                     </div>
 
