@@ -26,10 +26,10 @@ export async function POST(req) {
           ACL: "public-read",
          };
 
-        const uploadToS3 = async () => {
-           const data = await s3.upload(params).promise();
-              return data.Location;
-         };
+        // const uploadToS3 = async () => {
+        //    const data = await s3.upload(params).promise();
+        //       return data.Location;
+        //  };
 
        // const data = await Promise.race([s3Promise, timeoutPromise]);
        //  await new Promise((resolve, _) => {
