@@ -1,11 +1,13 @@
 // src/app/api/verifyPassword.js
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import id from "../../texts";
+
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export async function POST(req) {
     const { password } = await req.json();
-    const pageId = id;
+    const pageId = process.env.WEB_ID
+
     // Busca la contraseña en la base de datos
     const user = await prisma.personal_data.findUnique({
         where: {

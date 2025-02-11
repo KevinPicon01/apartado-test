@@ -1,7 +1,6 @@
 "use client";
 import AWS from 'aws-sdk';
 import {useEffect, useRef, useState} from "react";
-import id from "../texts";
 import TheHeader from "@/app/components/header";
 import HomeContent from "@/app/components/homeContent";
 import PreHeader from "@/app/components/preHeader";
@@ -13,6 +12,7 @@ import TheFooter from "@/app/components/footer";
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 const EditForm = () => {
+    const id = process.env.WEB_ID
     const [globalFile, setFile] = useState(null);
     const [webData, setWebData] = useState(null);
     const [formData, setFormData] = useState(null);

@@ -8,12 +8,13 @@ import ContactUs from "./components/contactUs"; // Importa tu componente Contact
 import TheFooter from "./components/footer";
 import Catalogue from "@/app/components/catalogue";
 import Members from "@/app/components/members"; // Importa tu componente TheFooter
-import id from "./texts";
+
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 const WebsPage = () => {
   const [websData, setWebsData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const id = process.env.WEB_ID
   useEffect(() => {
     // Llamada a la API para obtener los datos
     const fetchWebsData = async () => {
