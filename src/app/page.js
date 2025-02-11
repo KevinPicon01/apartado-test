@@ -14,7 +14,7 @@ import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/post
 const WebsPage = () => {
   const [websData, setWebsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const id = process.env.WEB_ID
+  const id = process.env.NEXT_PUBLIC_WEB_ID
   useEffect(() => {
     // Llamada a la API para obtener los datos
     const fetchWebsData = async () => {
