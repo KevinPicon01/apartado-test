@@ -9,12 +9,11 @@ import TheFooter from "./components/footer";
 import Catalogue from "@/app/components/catalogue";
 import Members from "@/app/components/members"; // Importa tu componente TheFooter
 
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 const WebsPage = () => {
   const [websData, setWebsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const id = process.env.NEXT_PUBLIC_WEB_ID
+  const id = Number(process.env.NEXT_PUBLIC_WEB_ID)
   useEffect(() => {
     // Llamada a la API para obtener los datos
     const fetchWebsData = async () => {

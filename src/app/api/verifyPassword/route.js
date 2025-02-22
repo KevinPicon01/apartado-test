@@ -2,11 +2,9 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
-
 export async function POST(req) {
     const { password } = await req.json();
-    const id = process.env.NEXT_PUBLIC_WEB_ID
+    const id = Number(process.env.NEXT_PUBLIC_WEB_ID)
     // Busca la contraseña en la base de datos
     const user = await prisma.personal_data.findUnique({
         where: {

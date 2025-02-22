@@ -70,6 +70,7 @@ const TheHeader = ({ webData }) => {
                 </nav>
                 <div className="logo">
                     <img src={webData.header?.logo} alt="Logo"/>
+
                 </div>
                 <nav className="navigation">
                     <a href="#Catalogue">Catalogo</a>
