@@ -9,6 +9,8 @@ import ContactUs from "@/app/components/contactUs";
 import Catalogue from "@/app/components/catalogue";
 import Members from "@/app/components/members";
 import TheFooter from "@/app/components/footer";
+import LoadingIndicator from "@/app/components/infoView";
+import ErrorIndicator from "@/app/components/errorView";
 
 const EditForm = () => {
     const id = Number(process.env.NEXT_PUBLIC_WEB_ID)
