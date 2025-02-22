@@ -7,7 +7,8 @@ import About from "./components/about"; // Importa tu componente About
 import ContactUs from "./components/contactUs"; // Importa tu componente ContactUs
 import TheFooter from "./components/footer";
 import Catalogue from "@/app/components/catalogue";
-import Members from "@/app/components/members"; // Importa tu componente TheFooter
+import Members from "@/app/components/members";
+import LoadingIndicator from "@/app/components/infoView"; // Importa tu componente TheFooter
 
 
 const WebsPage = () => {
@@ -38,9 +39,8 @@ const WebsPage = () => {
     fetchWebsData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
+    if (loading) return  <LoadingIndicator message=" Cargando datos..." />;
     const structuredData = {
         ...websData,
         home: websData.home?.[0] || {},  // Tomar el primer elemento del array
