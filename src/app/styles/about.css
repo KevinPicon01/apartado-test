@@ -43,10 +43,10 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, auto));
 }
 .about-title{
-   color: #171717;
+    color: var(--hoverColor);
 }
 .about-text{
-    color: #171717;
+    color: var(--hoverColor);
     font-size: 1.2em;
     text-align: justify;
 }

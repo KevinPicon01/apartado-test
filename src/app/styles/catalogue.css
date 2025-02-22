@@ -23,7 +23,8 @@
 /* Estilos para el título */
 .catalogue-title {
     font-size: 3em;
-    color: #000000;
+
+    color: var(--hoverColor);
     padding-top: 0;
 }
 

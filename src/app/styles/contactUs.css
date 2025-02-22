@@ -45,11 +45,12 @@
 }
 
 .contact-title {
-    color: #171717;
+    color: var(--hoverColor);
 }
 
 .contact-text {
-    color: #171717;
+
+    color: var(--hoverColor);
     font-size: 1.2em;
     text-align: justify;
 }

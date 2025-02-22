@@ -22,12 +22,12 @@
 /* Estilos para el título */
 .members-title {
     font-size: 3em;
-    color: #000000;
+    color: var(--hoverColor);
     padding-top: 0;
 }
 .members-text {
     font-size: 1.2em;
-    color: #000000;
+    color: var(--hoverColor);
     padding-top: 0;
     padding-bottom: 20px;
 }

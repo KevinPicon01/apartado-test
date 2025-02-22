@@ -24,7 +24,7 @@
     margin: 0;
     padding-top: 5px;
     text-align: center;
-    color: #171717;
+    color: var(--hoverColor);
 }
 .social-media-icon{
     display: grid;
@@ -78,7 +78,7 @@
     font-family: 'Roboto', sans-serif;
     margin: 6px;
     line-height: 1.1;
-    color: #171717;
+    color: var(--hoverColor);
 }
 
 .navigation-footer {
@@ -88,14 +88,14 @@
 }
 .navigation-footer a{
     margin: 5px;
-    color: #171717;
+    color: var(--hoverColor);
 }
 .navigation-footer a:hover{
     border-bottom: 2px solid #171717;
 }
 .navigation-footer button:hover {
     border: none;
-    color: #129045;
+    color: var(--hoverColor);
 }
 .navigation-footer::before {
     content: "";

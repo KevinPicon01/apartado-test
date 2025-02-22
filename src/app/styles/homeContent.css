@@ -32,7 +32,8 @@
     transition: transform 0.5s ease;
 }
 .navHome a:hover{
-    color: #171717;
+
+    color: var(--shadowColor);
 }
 .homeBorder{
     padding-left: 15px;
@@ -45,7 +46,7 @@
     align-items: center;
     text-align: center;
     margin-top: 0;
-    color: #171717;
+    color: var(--hoverColor);
 }
 @media (min-width: 770px) {
     .home-main-div{

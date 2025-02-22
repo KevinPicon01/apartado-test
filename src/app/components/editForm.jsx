@@ -411,21 +411,21 @@ const EditForm = () => {
 
                     {/* Miembros */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">👥 Miembros</h2>
+                        <h2 className="text-lg font-semibold mb-2">👥 Modulo extra</h2>
                         <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Título Miembros:</label>
+                                <label className="block font-medium">Título:</label>
                                 <input type="text" name="members.titulo" placeholder={webData.members.titulo}
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Texto Miembros:</label>
+                                <label className="block font-medium">Texto :</label>
                                 <textarea name="members.texto" placeholder={webData.members.texto}
                                           onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Imagen Miembros:</label>
+                                <label className="block font-medium">Imagen:</label>
                                 <input type="file" accept="image/png, image/jpeg" name="members.imagen"
                                        placeholder={webData.members.imagen} onChange={handleChange}
                                        className="border p-2 w-full rounded"/>
@@ -435,16 +435,16 @@ const EditForm = () => {
 
                     {/* Contacto */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">📞 Contacto</h2>
+                        <h2 className="text-lg font-semibold mb-2">📞 Contáctanos</h2>
                         <hr className="mb-4 border-gray-300"/>
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Texto Contacto:</label>
+                                <label className="block font-medium">Texto:</label>
                                 <textarea name="contact_us.texto" placeholder={webData.contact_us.texto}
                                           onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Imagen Contacto:</label>
+                                <label className="block font-medium">Imagen:</label>
                                 <input type="file" accept="image/png, image/jpeg" name="contact_us.imagen"
                                        placeholder={webData.contact_us.imagen} onChange={handleChange}
                                        className="border p-2 w-full rounded"/>

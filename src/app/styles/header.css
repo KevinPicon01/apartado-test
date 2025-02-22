@@ -30,7 +30,7 @@
     .navigation a{
         margin: 0;
         font-size: 1.3em;
-        color: #171717;
+        color: var(--hoverColor);
     }
     .navigation a:hover{
         border-bottom: 2px solid #171717;

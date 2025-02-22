@@ -59,9 +59,9 @@ const WebsPage = () => {
         <TheHeader webData={webData} />
         <HomeContent webData={webData} />
         <About webData={webData} />
-        <ContactUs webData={webData} />
         <Catalogue webData={webData} />
         <Members webData={webData} />
+        <ContactUs webData={webData} />
         <TheFooter webData={webData} />
       </div>
   );
