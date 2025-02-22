@@ -16,6 +16,7 @@ const EditForm = () => {
     const [webData, setWebData] = useState(null);
     const [formData, setFormData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
     const listaRef = useRef([]);
 
     useEffect(() => {
@@ -186,6 +187,7 @@ const EditForm = () => {
     };
     const handleSave = async (e) => {
         try {
+            setSaving(true);
             // Validar que formData no esté vacío
             if (!formData || Object.keys(formData).length === 0) {
                 alert("No hay datos para guardar.");
@@ -205,9 +207,12 @@ const EditForm = () => {
             } else {
                 alert("Error al guardar: " + ("Respuesta inesperada"));
             }
+            setSaving(false);
             window.location.href = '/';
 
         } catch (error) {
+            setSaving(false);
+            setWebData(false);
             console.error("❌ Error guardando datos:", error.stack || error);
             if (error.name === "AbortError") {
                 alert("La solicitud tardó demasiado. Por favor, intenta de nuevo.");
@@ -218,8 +223,9 @@ const EditForm = () => {
     };
 
 
-    if (loading) return <div>🔄 Cargando datos...</div>;
-    if (!webData) return <div>❌ No se encontraron datos.</div>;
+    if (saving) return <LoadingIndicator message=" Guardando datos..." />;
+    if (loading) return  <LoadingIndicator message=" Cargando datos..." />;
+    if (!webData) return <ErrorIndicator message="Error al cargar datos" />;
     return (
         <div className="flex gap-4 p-4 h-screen ">
             {/* Formulario de edición */}
