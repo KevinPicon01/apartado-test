@@ -18,7 +18,6 @@ const EditForm = () => {
     const [loading, setLoading] = useState(true);
     const listaRef = useRef([]);
 
-
     useEffect(() => {
         if (!id) {
             console.warn("⚠️ ID no disponible aún, esperando...");
@@ -61,14 +60,11 @@ const EditForm = () => {
         fetchData();
     }, [id]);
 
-    const uploadFileToS3 = async (file, e) => {
-        console.log("Subiendo archivo a S3...");
-
-
+    const uploadFileToS3 = async (file, name, e) => {
         const blob = new Blob([file], { type: file.type });
         const formData = new FormData();
         formData.append("file", blob, file.name); // Asegúrate de incluir el nombre del archivo
-
+        formData.append("folder", name );
         e.preventDefault();
         const res = await fetch("/api/uploadFileToS3", {
             method: "POST",
@@ -77,15 +73,10 @@ const EditForm = () => {
                 "Access-Control-Allow-Origin": "*",
             }
         });
-        console.log("Respuesta de S3:", res);
         const data = await res.json();
-        console.log("Data de S3:", data);
         if (data.success) {
-            console.log(`Archivo subido a S3:`);
             return data.url;
         }
-
-
         return console.error("Error al subir archivo a S3");
     };
     const deleteS3Item = async (fileUrl, e) => {
@@ -125,11 +116,9 @@ const EditForm = () => {
         for (const item of listaRef.current) {
             const { campo, valor, file } = item;
                 try {
-                    const url = await uploadFileToS3(file, e);
+                    const url = await uploadFileToS3(file, formData.owner.business, e);
                     updateNestedProperty(updatedFormData, campo, url);
-                    console.log("📤 Subiendo archivo:");
-                    console.log(updatedFormData.home.imagen);
-                   await deleteS3Item(valor, e); // Eliminar el archivo viejo de S3
+                    await deleteS3Item(valor, e); // Eliminar el archivo viejo de S3
 
                 } catch (error) {
                     console.error("Error al subir archivo:", error);
@@ -137,10 +126,8 @@ const EditForm = () => {
                     return false; // Devolver false si ocurre un error
                 }
         }
-
-        // Si todo va bien, actualizar formData con los nuevos datos
         setFormData(updatedFormData);
-        return true; // Retorna true si todo se procesó correctamente
+        return true;
     };
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
@@ -206,17 +193,13 @@ const EditForm = () => {
             }
             await processFilesAndUpdateFormData(e)
 
-
-            console.log("📤 Enviando datos:", formData);
             e.preventDefault();
             const res = await fetch("/api/updateWeb", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             const data = await res.json();
-
             if (data.success) {
                 alert("Datos guardados correctamente");
             } else {
@@ -469,26 +452,39 @@ const EditForm = () => {
                         <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Logo Footer:</label>
-                                <input type="text" name="footer.logo" placeholder={webData.footer.logo}
+                                <input type="file" accept="image/png, image/jpeg"  name="footer.logo" placeholder={webData.footer.logo}
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
 
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Slogan Footer:</label>
+                                <label className="block font-medium">Slogan:</label>
                                 <input type="text" name="footer.slogan" placeholder={webData.footer.slogan}
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
 
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Correo Footer:</label>
+                                <label className="block font-medium">Correo:</label>
                                 <input type="text" name="footer.correo" placeholder={webData.footer.correo}
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
 
                             <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Número Footer:</label>
-                                <input type="text" name="footer.numero" placeholder={webData.footer.numero}
-                                       onChange={handleChange} className="border p-2 w-full rounded"/>
+                                <label className="block font-medium">Número:</label>
+                                <input
+                                    type="tel"
+                                    name="footer.numero"
+                                    placeholder={webData.footer.numero}
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(/\D/g, "");
+                                        handleChange({target: {name: e.target.name, value}});
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key !== "Backspace" && e.key !== "Delete" && !/[0-9]/.test(e.key)) {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                    className="border p-2 w-full rounded"
+                                />
                             </div>
 
                         </div>

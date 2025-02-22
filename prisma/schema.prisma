@@ -14,7 +14,7 @@ model personal_data {
   name      String
   business  String
   id_number String   @unique
-  password  String
+  password  String?
   webs      webs[]
 }
 
@@ -41,7 +41,7 @@ model webs {
 model header {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  logo    String
+  logo    String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
 }
@@ -49,8 +49,8 @@ model header {
 model home {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  titulo  String
-  imagen  String
+  titulo  String?
+  imagen  String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
 }
@@ -58,9 +58,9 @@ model home {
 model about_us {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  titulo  String
-  texto   String
-  imagen  String
+  titulo  String?
+  texto   String?
+  imagen  String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
 }
@@ -68,8 +68,8 @@ model about_us {
 model catalogo {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  texto   String
-  titulo  String
+  texto   String?
+  titulo  String?
   imagen  String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
@@ -78,8 +78,8 @@ model catalogo {
 model members {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  texto   String
-  titulo  String
+  texto   String?
+  titulo  String?
   imagen  String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
@@ -88,21 +88,21 @@ model members {
 model contact_us {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  texto   String
-  imagen  String
+  texto   String?
+  imagen  String?
   pagina_rel webs @relation(fields: [pagina], references: [id])
 }
 
 model footer {
   id      Int    @id @default(autoincrement())
   pagina  Int
-  logo    String
-  slogan  String
-  correo  String
-  numero  String
-  logo1   String
-  logo2   String
-  logo3   String
+  logo    String?
+  slogan  String?
+  correo  String?
+  numero  String?
+  logo1   String?
+  logo2   String?
+  logo3   String?
 
   pagina_rel webs @relation(fields: [pagina], references: [id])
 }
