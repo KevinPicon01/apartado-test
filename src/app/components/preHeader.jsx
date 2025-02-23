@@ -18,7 +18,7 @@ const PreHeader = ({ webData }) => {
                         <img className="media-logo-footer whatsapp-logo" src="https://imagenes-apartado.s3.us-east-2.amazonaws.com/whatsapp.png"/></a>
                 </div>
                 <nav className="navigation">
-                    <a href="/#ContactUs">Contactanos</a>
+                    <a href="/#ContactUs">Contáctanos</a>
                 </nav>
             </header>
         </>

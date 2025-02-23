@@ -35,7 +35,7 @@ export async function GET(req) {
                     "Access-Control-Allow-Headers": "Content-Type"
                 }, });
         }
-
+        console.log("Web fetched", web);
         return new Response(JSON.stringify(web), { status: 200, headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",

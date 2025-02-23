@@ -11,7 +11,7 @@ const TheFooter = ({ webData }) => {
             </div>
             <div className="navigation-footer">
                 <a href='#Home'>Inicio</a>
-                <a href="#ContactUs">Contactanos</a>
+                <a href="#ContactUs">Contáctanos</a>
                 <a href="#About">Nosotros</a>
             </div>
             <div className="social-media">
