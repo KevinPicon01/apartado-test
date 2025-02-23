@@ -6,6 +6,7 @@
     min-height: 100vh;
     padding: 50px;
     padding-top: 3%;
+    background-color: var(--secondBackground);
 }
 
 .members-container {
