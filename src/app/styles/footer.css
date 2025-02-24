@@ -64,7 +64,7 @@
 }
 .logo-footer:hover {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 2em var(--hoverColor));
+    filter: drop-shadow(0 0 2em var(--shadowColor));
 }
 
 .slogan-footer {
