@@ -11,6 +11,7 @@ import Members from "@/app/components/members";
 import LoadingIndicator from "@/app/components/infoView"; // Importa tu componente TheFooter
 
 
+
 const WebsPage = () => {
   const [websData, setWebsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,8 @@ const WebsPage = () => {
         document.documentElement.style.setProperty("--secondBackground", data?.color1);
         document.documentElement.style.setProperty("--shadowColor", data?.color2);
         document.documentElement.style.setProperty("--hoverColor", data?.color3);
+        document.title = data?.home?.[0]?.titulo;
+
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -51,9 +54,11 @@ const WebsPage = () => {
         members: websData.members?.[0] || {},
         contact_us: websData.contact_us?.[0] || {},
     };
+
   const webData = structuredData;
 
   return (
+
       <div>
         <PreHeader webData={webData} />
         <TheHeader webData={webData} />
