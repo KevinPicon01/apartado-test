@@ -520,9 +520,9 @@ const EditForm = () => {
                 <TheHeader webData={formData}/>
                 <HomeContent webData={formData}/>
                 <About webData={formData}/>
-                <ContactUs webData={formData}/>
                 <Catalogue webData={formData}/>
                 <Members webData={formData}/>
+                <ContactUs webData={formData}/>
                 <TheFooter webData={formData}/>
             </div>
         </div>
