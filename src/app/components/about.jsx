@@ -1,17 +1,16 @@
 import '../styles/homeContent.css'
 import '../styles/about.css'
-import {useAnimatedItems} from "@/app/components/animatedItems";
-import HomeContent from "@/app/components/homeContent";
+import { useAnimatedItems } from "@/app/hooks/useAnimatedItems";
 
 const About = ({ webData }) => {
-    useAnimatedItems();
+    const registerItem = useAnimatedItems();
     return (
         <div id='About' className="about-main-div">
                 <div className="about-container">
-                    <div className='about-image-container animated-item'>
+                    <div ref={registerItem} className='about-image-container animated-item'>
                         <img className='about-image' src={webData.about_us.imagen} alt='about'/>
                     </div>
-                    <div className="about-text-container animated-item">
+                    <div ref={registerItem} className="about-text-container animated-item">
                         <h1 className="about-title honk-title ">{webData.about_us.titulo}</h1>
                         <p className='about-text'> {webData.about_us.texto}</p>
 

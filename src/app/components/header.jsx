@@ -19,7 +19,6 @@ const TheHeader = ({ webData }) => {
                     <div></div>
                     <div></div>
                 </div>
-
                 <nav className="navbar" id="navbar">
                     <ul>
                         <li>
@@ -70,7 +69,6 @@ const TheHeader = ({ webData }) => {
                 </nav>
                 <div className="logo">
                     <img src={webData.header?.logo} alt="Logo"/>
-
                 </div>
                 <nav className="navigation">
                     <a href="#Catalogue">Catalogo</a>

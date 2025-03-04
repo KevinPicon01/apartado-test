@@ -1,7 +1,4 @@
 import '../styles/preHeader.css';
-
-
-
 const PreHeader = ({ webData }) => {
     return (
         <>

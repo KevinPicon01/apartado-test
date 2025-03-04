@@ -1,5 +1,5 @@
 // src/app/api/verifyPassword.js
-import prisma from "@/lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 
 export async function POST(req) {
@@ -18,8 +18,6 @@ export async function POST(req) {
                 link3: body.link3,
             },
         });
-        console.log(body.home)
-
         if (body.header) {
             await prisma.header.update({
                 where: { id: body.header.id },

@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 export async function GET(req) {
     try {
@@ -35,7 +35,6 @@ export async function GET(req) {
                     "Access-Control-Allow-Headers": "Content-Type"
                 }, });
         }
-        console.log("Web fetched", web);
         return new Response(JSON.stringify(web), { status: 200, headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",

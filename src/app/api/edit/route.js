@@ -1,5 +1,5 @@
 // src/app/api/verifyPassword.js
-import prisma from "@/lib/prisma";
+import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function POST(req) {

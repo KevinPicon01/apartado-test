@@ -44,7 +44,6 @@
     border-radius: 8px;
 }
 
-
 @media (max-width: 770px)  {
     .members-main-div {
         padding: 10px !important;
@@ -59,10 +58,6 @@
     }
 }
 
-
-
-
-
 /* Animación para el contenedor de imagen */
 .members-title.visible {
     animation-name: slideInFromLeft;
@@ -70,5 +65,9 @@
 
 /* Animación para el contenedor de texto */
 .members-main-image.visible {
+    animation-name: slideInFromRight;
+}
+
+.members-text.visible{
     animation-name: slideInFromRight;
 }
