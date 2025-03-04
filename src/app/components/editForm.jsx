@@ -14,6 +14,24 @@ import {useWebEditor} from "@/app/hooks/useWebEditor";
 
 const EditForm = () => {
     const { webData, formData, loading, saving, handleChange, handleSave } = useWebEditor();
+    const [openSections, setOpenSections] = useState({
+        colors: false,
+        links: false,
+        header: false,
+        home: false,
+        aboutUs: false,
+        catalogo: false,
+        members: false,
+        contactUs: false,
+        footer: false
+    });
+
+    const toggleSection = (section) => {
+        setOpenSections((prev) => ({
+            ...prev,
+            [section]: !prev[section]
+        }));
+    };
 
     if (saving) return <LoadingIndicator message=" Guardando datos..." />;
     if (loading) return  <LoadingIndicator message=" Cargando datos..." />;
@@ -33,57 +51,64 @@ const EditForm = () => {
                 <form className="space-y-4">
                     {/* Colors Section */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">🎨 Colores</h2>
+                        <button type="button" onClick={() => toggleSection("colors")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                            🎨 Colores <span>{openSections.colors ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
+                        {openSections.colors && (
+                            <div className="grid gap-4">
+                                {/* Color 1 */}
+                                <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
+                                    <label className="block font-medium">Color 1:</label>
+                                    <input
+                                        type="color"
+                                        name="color1"
+                                        onChange={handleChange}
+                                        className="border p-1 rounded"
+                                    />
+                                    <div className="w-10 h-10 rounded border"
+                                         style={{backgroundColor: formData.color1}}></div>
+                                </div>
 
-                        <div className="grid gap-4">
-                            {/* Color 1 */}
-                            <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
-                                <label className="block font-medium">Color 1:</label>
-                                <input
-                                    type="color"
-                                    name="color1"
-                                    onChange={handleChange}
-                                    className="border p-1 rounded"
-                                />
-                                <div className="w-10 h-10 rounded border"
-                                     style={{backgroundColor: formData.color1}}></div>
-                            </div>
+                                {/* Color 2 */}
+                                <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
+                                    <label className="block font-medium">Color 2:</label>
+                                    <input
+                                        type="color"
+                                        name="color2"
+                                        onChange={handleChange}
+                                        className="border p-1 rounded"
+                                    />
+                                    <div className="w-10 h-10 rounded border"
+                                         style={{backgroundColor: formData.color2}}></div>
+                                </div>
 
-                            {/* Color 2 */}
-                            <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
-                                <label className="block font-medium">Color 2:</label>
-                                <input
-                                    type="color"
-                                    name="color2"
-                                    onChange={handleChange}
-                                    className="border p-1 rounded"
-                                />
-                                <div className="w-10 h-10 rounded border"
-                                     style={{backgroundColor: formData.color2}}></div>
+                                {/* Color 3 */}
+                                <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
+                                    <label className="block font-medium">Color 3:</label>
+                                    <input
+                                        type="color"
+                                        name="color3"
+                                        onChange={handleChange}
+                                        className="border p-1 rounded"
+                                    />
+                                    <div className="w-10 h-10 rounded border"
+                                         style={{backgroundColor: formData.color3}}></div>
+                                </div>
                             </div>
-
-                            {/* Color 3 */}
-                            <div className="p-4 border rounded-lg shadow-md flex items-center gap-4">
-                                <label className="block font-medium">Color 3:</label>
-                                <input
-                                    type="color"
-                                    name="color3"
-                                    onChange={handleChange}
-                                    className="border p-1 rounded"
-                                />
-                                <div className="w-10 h-10 rounded border"
-                                     style={{backgroundColor: formData.color3}}></div>
-                            </div>
-                        </div>
+                        )}
                     </div>
 
                     {/* Links Section */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">🔗 Links</h2>
+                        <button type="button" onClick={() => toggleSection("links")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        🔗 Links <span>{openSections.links ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-
-                        <div className="grid gap-4">
+                        {openSections.links && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Link 1:</label>
                                 <input
@@ -117,26 +142,35 @@ const EditForm = () => {
                                 />
                             </div>
                         </div>
+                        )}
                     </div>
-
 
                     {/* Header */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">📌 Header</h2>
+                        <button type="button" onClick={() => toggleSection("header")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        📌 Encabezado <span>{openSections.header ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
+                        {openSections.header && (
                         <div className="p-4 border rounded-lg shadow-md">
                             <label className="block font-medium">Logo Header:</label>
                             <input type="file" accept="image/png, image/jpeg" name="header.logo"
                                    placeholder={webData.header.logo} onChange={handleChange}
                                    className="border p-2 w-full rounded"/>
                         </div>
+                        )}
                     </div>
 
                     {/* Home */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">🏡 Home</h2>
+                        <button type="button" onClick={() => toggleSection("home")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        🏡 Inicio <span>{openSections.home ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-                        <div className="grid gap-4">
+                        {openSections.home && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título Home:</label>
                                 <input type="text" name="home.titulo" placeholder={webData.home.titulo}
@@ -149,13 +183,18 @@ const EditForm = () => {
                                        className="border p-2 w-full rounded"/>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* About Us */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">ℹ️ About Us</h2>
+                        <button type="button" onClick={() => toggleSection("aboutUs")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        ℹ️ Acerca de nosotros <span>{openSections.aboutUs ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-                        <div className="grid gap-4">
+                        {openSections.aboutUs && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título About Us:</label>
                                 <input type="text" name="about_us.titulo" placeholder={webData.about_us.titulo}
@@ -173,13 +212,18 @@ const EditForm = () => {
                                        className="border p-2 w-full rounded"/>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Catálogo */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">📦 Catálogo</h2>
+                        <button type="button" onClick={() => toggleSection("catalogo")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        📦 Catálogo <span>{openSections.catalogo ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-                        <div className="grid gap-4">
+                        {openSections.catalogo && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título Catálogo:</label>
                                 <input type="text" name="catalogo.titulo" placeholder={webData.catalogo.titulo}
@@ -197,13 +241,18 @@ const EditForm = () => {
                                        className="border p-2 w-full rounded"/>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Miembros */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">👥 Modulo extra</h2>
+                        <button type="button" onClick={() => toggleSection("members")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        👥 Modulo extra <span>{openSections.members ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-                        <div className="grid gap-4">
+                        {openSections.members && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Título:</label>
                                 <input type="text" name="members.titulo" placeholder={webData.members.titulo}
@@ -221,13 +270,18 @@ const EditForm = () => {
                                        className="border p-2 w-full rounded"/>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Contacto */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">📞 Contáctanos</h2>
+                        <button type="button" onClick={() => toggleSection("contactUs")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        📞 Contáctanos <span>{openSections.contactUs ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-                        <div className="grid gap-4">
+                        {openSections.contactUs && (
+                            <div className="grid gap-4">
                             <div className="p-4 border rounded-lg shadow-md">
                                 <label className="block font-medium">Texto:</label>
                                 <textarea name="contact_us.texto" placeholder={webData.contact_us.texto}
@@ -240,17 +294,22 @@ const EditForm = () => {
                                        className="border p-2 w-full rounded"/>
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Footer */}
                     <div className="mt-6">
-                        <h2 className="text-lg font-semibold mb-2">🔽 Footer</h2>
+                        <button type="button" onClick={() => toggleSection("footer")}
+                                className="flex justify-between w-full text-lg font-semibold mb-2">
+                        🔽 Footer <span>{openSections.footer ? "⬇️" : "➡️"}</span>
+                        </button>
                         <hr className="mb-4 border-gray-300"/>
-
-                        <div className="grid gap-4">
-                            <div className="p-4 border rounded-lg shadow-md">
-                                <label className="block font-medium">Logo Footer:</label>
-                                <input type="file" accept="image/png, image/jpeg"  name="footer.logo" placeholder={webData.footer.logo}
+                        {openSections.footer && (
+                            <div className="grid gap-4">
+                                <div className="p-4 border rounded-lg shadow-md">
+                                    <label className="block font-medium">Logo Footer:</label>
+                                <input type="file" accept="image/png, image/jpeg" name="footer.logo"
+                                       placeholder={webData.footer.logo}
                                        onChange={handleChange} className="border p-2 w-full rounded"/>
                             </div>
 
@@ -286,8 +345,8 @@ const EditForm = () => {
                             </div>
 
                         </div>
+                        )}
                     </div>
-
 
                     <button
                         onClick={handleSave}
